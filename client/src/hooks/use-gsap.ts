@@ -1,17 +1,10 @@
-import { gsap } from 'gsap';
-import { useIsomorphicLayoutEffect } from './use-isomorphic-effect';
-import { useRef } from 'react';
+import { useGSAP as useBaseGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-export const useGSAP = () => {
-  const ctx = useRef<gsap.Context>();
-  const root = useRef<HTMLDivElement>(null);
-
-  useIsomorphicLayoutEffect(() => {
-    if (typeof window !== 'undefined') {
-      ctx.current = gsap.context(() => {}, root);
-    }
-    return () => ctx.current?.revert();
-  }, []);
-
-  return { gsap, context: ctx.current, root };
+export const useGSAP = (callback: (ctx: any) => void, deps?: any[]) => {
+  return useBaseGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    callback({ gsap, ScrollTrigger });
+  }, deps);
 };

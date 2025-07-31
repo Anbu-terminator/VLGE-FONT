@@ -3,7 +3,7 @@ import { useGSAP } from "@/hooks/use-gsap";
 
 interface AnimatedSectionProps {
   children: ReactNode;
-  animation?: "fadeInUp" | "slideInLeft" | "fadeIn" | "scaleIn";
+  animation?: "fadeInUp" | "slideInLeft" | "slideInRight" | "fadeIn" | "scaleIn";
   delay?: number;
   className?: string;
 }
@@ -16,12 +16,13 @@ export function AnimatedSection({
 }: AnimatedSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
+  const { context } = useGSAP((ctx) => {
     if (!sectionRef.current) return;
 
     const animations = {
       fadeInUp: { y: 50, opacity: 0 },
       slideInLeft: { x: -50, opacity: 0 },
+      slideInRight: { x: 50, opacity: 0 },
       fadeIn: { opacity: 0 },
       scaleIn: { scale: 0.8, opacity: 0 },
     };
@@ -51,7 +52,7 @@ export function AnimatedSection({
     observer.observe(sectionRef.current);
 
     return () => observer.disconnect();
-  }, [animation, delay]);
+  });
 
   return (
     <div ref={sectionRef} className={className}>

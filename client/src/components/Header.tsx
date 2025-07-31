@@ -21,6 +21,7 @@ export function Header() {
     { href: "/", label: "Home" },
     { href: "/student-verification", label: "Student Verification" },
     { href: "/consultancy", label: "Consultancy" },
+    { href: "/directors", label: "Directors" },
     { href: "/services", label: "Services" },
     { href: "/courses", label: "Courses" },
     { href: "/contact", label: "Contact" },
@@ -52,8 +53,8 @@ export function Header() {
                 data-testid="header-logo"
               />
             </Link>
-            <motion.h2
-  className="ml-3 text-xl md:text-3xl lg:text-5xl xl:text-3xl font-bold leading-tight text-red-500 whitespace-nowrap truncate"
+             <motion.h2
+  className="ml-3 text-xl md:text-2xl lg:text-4xl xl:text-2xl font-bold leading-tight text-red-500 whitespace-nowrap truncate"
   data-testid="company-name"
   initial={{ opacity: 0 }}
   animate={{ opacity: 1 }}
@@ -61,6 +62,7 @@ export function Header() {
 >
   VLGE INSTITUTE PVT LTD
 </motion.h2>
+
           </motion.div>
 
           {/* Navigation (Desktop) */}

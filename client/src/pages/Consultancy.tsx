@@ -1,11 +1,22 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { CountryCard } from "@/components/CountryCard";
-import { Play, X } from "lucide-react";
+import {
+  Paintbrush,
+  Briefcase,
+  Laptop2,
+  Hammer,
+  Leaf,
+  BookOpen,
+  Scale,
+  Stethoscope,
+  FlaskConical,
+  Users
+} from "lucide-react";
 
 // Helper to get ISO2 code from slug
 const countrySlugToISO2: Record<string, string> = {
@@ -46,10 +57,8 @@ const countrySlugToISO2: Record<string, string> = {
 };
 
 export default function Consultancy() {
-  const [showVideo, setShowVideo] = useState(true);
   const heroImageRef = useRef<HTMLImageElement>(null);
   const flagRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   useGSAP(() => {
     gsap.to(heroImageRef.current, {
@@ -59,16 +68,6 @@ export default function Consultancy() {
       repeat: -1,
       yoyo: true,
       ease: "power1.inOut"
-    });
-
-    flagRefs.current.forEach((ref) => {
-      gsap.to(ref, {
-        y: -5,
-        scale: 1.05,
-        duration: 0.3,
-        ease: "power2.out",
-        paused: true
-      });
     });
   }, []);
 
@@ -141,11 +140,10 @@ export default function Consultancy() {
       description: "After receiving admission offers..."
     }
   ];
+  const studyAreaRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   return (
     <div>
-      {/* ... Hero and Process Steps Sections Stay Same ... */}
-
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-teal-50 to-red-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -174,45 +172,64 @@ export default function Consultancy() {
                   We help students pursue higher education in top public universities across Italy with 
                   100% guidance and documentation support.
                 </p>
-                <p className="text-lg text-gray-700 leading-relaxed mb-8">
+                <p className="text-lg text-gray-700 leading-relaxed">
                   Our focus is on fully funded or low-cost admissions through government/university scholarships.
                 </p>
-                <Button
-                  onClick={() => setShowVideo(true)}
-                  className="bg-vlge-primary hover:bg-red-600 text-white px-8 py-3 text-lg"
-                >
-                  <Play className="w-5 h-5 mr-2" />
-                  Watch Our Process
-                </Button>
               </div>
             </AnimatedSection>
           </div>
         </div>
       </section>
 
-      {/* Process Flow */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-3xl font-bold text-center vlge-secondary mb-12">Our Process</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {processSteps.map((step, index) => (
-                <AnimatedSection key={step.step} delay={index * 0.1}>
-                  <Card className="h-full hover:shadow-lg transition-shadow">
-                    <CardContent className="p-6 text-center">
-                      <div className="w-16 h-16 bg-vlge-primary rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">
-                        {step.step}
-                      </div>
-                      <h3 className="text-xl font-bold vlge-secondary mb-3">{step.title}</h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">{step.description}</p>
-                    </CardContent>
-                  </Card>
-                </AnimatedSection>
-              ))}
-            </div>
+<section className="py-20 bg-gradient-to-br from-red-50 to-teal-50">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <AnimatedSection>
+      <h2 className="text-3xl font-bold text-center vlge-secondary mb-12">Explore Study Areas</h2>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {([
+          ["Study Art, Design & Media", "Art, Design & Media", <Paintbrush size={28} className="text-vlge-primary" />],
+          ["Study Business & Management", "Business & Management", <Briefcase size={28} className="text-vlge-primary" />],
+          ["Study Computer Science & IT", "Computer Science & IT", <Laptop2 size={28} className="text-vlge-primary" />],
+          ["Study Engineering & Technology", "Engineering & Technology", <Hammer size={28} className="text-vlge-primary" />],
+          ["Study Environment & Agriculture", "Environment & Agriculture", <Leaf size={28} className="text-vlge-primary" />],
+          ["Study Humanities", "Humanities", <BookOpen size={28} className="text-vlge-primary" />],
+          ["Study Law", "Law", <Scale size={28} className="text-vlge-primary" />],
+          ["Study Medicine & Health", "Medicine & Health", <Stethoscope size={28} className="text-vlge-primary" />],
+          ["Study Natural Sciences & Mathematics", "Natural Sciences & Mathematics", <FlaskConical size={28} className="text-vlge-primary" />],
+          ["Study Social Sciences", "Social Sciences", <Users size={28} className="text-vlge-primary" />]
+        ] as [string, string, JSX.Element][]).map(([title, subtitle, Icon], index) => (
+          <AnimatedSection
+            key={title}
+            animation="fadeInUp"
+            delay={index * 0.1}
+          >
+            <Card
+              className="h-full relative overflow-hidden group"
+              ref={(el) => studyAreaRefs.current[index] = el}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-vlge-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <CardContent className="p-6 relative z-10">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    {Icon}
+                    <h3 className="text-xl font-bold vlge-primary transform group-hover:translate-x-2 transition-transform duration-300">
+                      {title}
+                    </h3>
+                  </div>
+                  <p className="text-gray-600 text-sm font-medium opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-100">
+                    {subtitle}
+                  </p>
+                </div>
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-vlge-primary origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]" />
+              </CardContent>
+            </Card>
           </AnimatedSection>
-        </div>
-      </section>
+        ))}
+      </div>
+    </AnimatedSection>
+  </div>
+</section>
+
 
       {/* Countries Grid */}
       <section className="py-20 bg-gray-50">
@@ -260,33 +277,6 @@ export default function Consultancy() {
           </AnimatedSection>
         </div>
       </section>
-
-      {/* Fullscreen Video Splash */}
-      {showVideo && (
-        <div className="fixed inset-0 w-screen h-screen z-50 bg-black">
-          <Button
-            onClick={() => setShowVideo(false)}
-            variant="ghost"
-            size="icon"
-            className="absolute top-4 right-4 text-white hover:text-gray-300 z-50"
-          >
-            <X className="w-8 h-8" />
-          </Button>
-          <video
-            autoPlay
-            muted
-            className="w-full h-full object-cover"
-            onEnded={() => setShowVideo(false)}
-          >
-            <source
-              src="https://github.com/CTTECH108/VLGE-VIDEO/blob/main/VLGE%20C.mp4?raw=true"
-              type="video/mp4"
-            />
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      )}
     </div>
   );
 }
-

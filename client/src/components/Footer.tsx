@@ -1,7 +1,9 @@
 import { Link } from "wouter";
+import { useModal } from "../context/ModalContext";
 import { Facebook, Instagram, Linkedin, Phone, MessageCircle } from "lucide-react";
 
 export function Footer() {
+  const { openModal } = useModal();
   return (
     <footer className="bg-black py-10 text-gray-300 mt-auto text-center" data-testid="footer">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center space-y-10">
@@ -98,7 +100,32 @@ export function Footer() {
 
         {/* Bottom Note */}
         <div className="text-sm text-gray-400 pt-6 border-t border-gray-700 w-full">
-          <p>© 2024 by VLGE INSTITUTE PRIVATE LIMITED | Privacy Policy | Terms & Conditions</p>
+          <p>© 2024 by VLGE INSTITUTE PRIVATE LIMITED |
+            <span className="relative inline-block overflow-hidden group">
+              <button
+                onClick={() => openModal('privacy')}
+                className="hover:text-white transition-all duration-300 px-2 py-1
+                           transform group-hover:scale-105 group-hover:drop-shadow-lg"
+              >
+                Privacy Policy
+              </button>
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white
+                              transform scale-x-0 group-hover:scale-x-100 transition-transform
+                              duration-300 ease-out" />
+            </span> |
+            <span className="relative inline-block overflow-hidden group">
+              <button
+                onClick={() => openModal('terms')}
+                className="hover:text-white transition-all duration-300 px-2 py-1
+                           transform group-hover:scale-105 group-hover:drop-shadow-lg"
+              >
+                Terms & Conditions
+              </button>
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white
+                              transform scale-x-0 group-hover:scale-x-100 transition-transform
+                              duration-300 ease-out" />
+            </span>
+          </p>
           <p className="text-xs mt-2">"Together Stand For Growth" | "Learning is a lifelong journey."</p>
           <div className="flex justify-center items-center gap-2 mt-2">
             <p className="text-xs">Powered and designed by CT TECH SOLUTIONS</p>

@@ -1,13 +1,16 @@
 import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
+import { ModalProvider } from "./context/ModalContext";
+import { AnimatedModal } from "./components/ui/modal";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { queryClient } from "./lib/queryClient";
 import { Layout } from "@/components/Layout";
 import { SplashScreen } from "@/components/SplashScreen";
 import Home from "@/pages/Home";
 import StudentVerification from "@/pages/StudentVerification";
 import Consultancy from "@/pages/Consultancy";
+import Directors from "@/pages/Directors";
 import Services from "@/pages/Services";
 import Courses from "@/pages/Courses";
 import Contact from "@/pages/Contact";
@@ -22,15 +25,17 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/student-verification" component={StudentVerification} />
         <Route path="/consultancy" component={Consultancy} />
+        <Route path="/directors" component={Directors} />
         <Route path="/services" component={Services} />
-        <Route path="/courses" component={Courses} />
         <Route path="/contact" component={Contact} />
+        <Route path="/courses" component={Courses} />
         <Route path="/country/:countryName" component={CountryPage} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
   );
 }
+
 
 function App() {
   // Show splash screen on initial load
@@ -49,12 +54,15 @@ function App() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <ModalProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+          <AnimatedModal title="Legal Documents" />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ModalProvider>
   );
 }
 
