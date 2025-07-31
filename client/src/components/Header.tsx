@@ -20,10 +20,10 @@ export function Header() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/student-verification", label: "Student Verification" },
-    { href: "/consultancy", label: "Consultancy" },
-    { href: "/directors", label: "Directors" },
-    { href: "/services", label: "Services" },
     { href: "/courses", label: "Courses" },
+    { href: "/consultancy", label: "Consultancy" },
+    { href: "/services", label: "Services" },
+    { href: "/directors", label: "Directors message" },
     { href: "/contact", label: "Contact" },
   ];
 
