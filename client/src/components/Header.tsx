@@ -31,7 +31,7 @@ export function Header() {
     <header
       className={`fixed w-full top-0 z-40 transition-all duration-300 ${
         isScrolled ? "bg-white/95 backdrop-blur-sm shadow-lg" : "bg-white"
-      }`}
+      } overflow-x-auto`}
       data-testid="header"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,7 +39,7 @@ export function Header() {
 
           {/* Logo + Company Name */}
           <motion.div
-            className="flex items-center flex-nowrap min-w-0"
+            className="flex items-center min-w-0"
             data-testid="logo-container"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -54,7 +54,7 @@ export function Header() {
               />
             </Link>
             <motion.h2
-              className="ml-3 text-2xl font-bold leading-tight text-red-500 whitespace-nowrap truncate"
+              className="ml-3 text-lg md:text-2xl font-bold leading-tight text-red-500 truncate max-w-[160px] md:max-w-none"
               data-testid="company-name"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -66,7 +66,7 @@ export function Header() {
 
           {/* Navigation (Desktop) */}
           <motion.div
-            className="hidden md:flex items-center space-x-8"
+            className="hidden md:flex flex-wrap items-center gap-x-6 gap-y-2 max-w-full overflow-hidden"
             data-testid="desktop-nav"
             initial="hidden"
             animate="visible"
@@ -86,7 +86,7 @@ export function Header() {
               >
                 <Link
                   href={link.href}
-                  className="relative text-vlge-secondary hover:text-vlge-primary font-semibold transition-colors group"
+                  className="relative text-vlge-secondary hover:text-vlge-primary font-semibold transition-colors group whitespace-nowrap text-sm md:text-base"
                   data-testid={`nav-link-${link.label.toLowerCase().replace(" ", "-")}`}
                 >
                   {link.label}
@@ -123,7 +123,7 @@ export function Header() {
                     visible: { transition: { staggerChildren: 0.05 } },
                   }}
                 >
-                  {navLinks.map((link, index) => (
+                  {navLinks.map((link) => (
                     <motion.div
                       key={link.href}
                       variants={{

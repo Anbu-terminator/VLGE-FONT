@@ -377,37 +377,41 @@ export default function Contact() {
             </div>
           </AnimatedSection>
 
-          <div className="grid md:grid-cols-3 gap-8" data-testid="team-members">
-            {teamMembers.map((member, index) => (
-              <AnimatedSection key={member.name} delay={index * 0.1}>
-                <Card className="text-center hover:shadow-lg transition-shadow">
-                  <CardContent className="p-6">
-                    <div className="w-20 h-20 bg-gradient-to-br from-vlge-primary to-vlge-secondary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">
-                      {member.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <h3 className="text-xl font-bold vlge-secondary mb-2">{member.name}</h3>
-                    <p className="text-vlge-primary font-semibold mb-4">{member.position}</p>
-                    <div className="space-y-2 text-sm text-gray-600">
-                      <a 
-                        href={`mailto:${member.email}`} 
-                        className="block hover:text-vlge-primary transition-colors"
-                        data-testid={`team-email-${index}`}
-                      >
-                        {member.email}
-                      </a>
-                      <a 
-                        href={`tel:${member.phone.replace(/\s/g, '')}`} 
-                        className="block hover:text-vlge-primary transition-colors"
-                        data-testid={`team-phone-${index}`}
-                      >
-                        {member.phone}
-                      </a>
-                    </div>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-            ))}
+<div className="grid md:grid-cols-3 gap-8" data-testid="team-members">
+  {teamMembers.map((member, index) => (
+    <AnimatedSection key={member.name} delay={index * 0.1}>
+      <Card className="hover:shadow-lg transition-shadow h-full flex">
+        <CardContent className="p-6 flex flex-col items-center justify-center text-center w-full">
+          {/* Circle Avatar Placeholder */}
+          <div className="w-10 h-10 bg-gradient-to-br from-vlge-primary to-vlge-secondary rounded-full flex items-center justify-center mb-4 text-white text-2xl font-bold">
+            <span className="sr-only">{member.name}</span>
           </div>
+
+          <h3 className="text-xl font-bold vlge-secondary mb-1">{member.name}</h3>
+          <p className="text-vlge-primary font-semibold mb-3">{member.position}</p>
+
+          <div className="space-y-1 text-sm text-gray-600">
+            <a
+              href={`mailto:${member.email}`}
+              className="block hover:text-vlge-primary transition-colors"
+              data-testid={`team-email-${index}`}
+            >
+              {member.email}
+            </a>
+            <a
+              href={`tel:${member.phone.replace(/\s/g, '')}`}
+              className="block hover:text-vlge-primary transition-colors"
+              data-testid={`team-phone-${index}`}
+            >
+              {member.phone}
+            </a>
+          </div>
+        </CardContent>
+      </Card>
+    </AnimatedSection>
+  ))}
+</div>
+
         </div>
       </section>
     </div>
