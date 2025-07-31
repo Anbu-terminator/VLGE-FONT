@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
+import { useGSAP } from "@/hooks/use-gsap";
 import gsap from "gsap";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -60,7 +60,7 @@ export default function Consultancy() {
   const heroImageRef = useRef<HTMLImageElement>(null);
   const flagRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useGSAP(() => {
+  useGSAP(({ gsap }) => {
     gsap.to(heroImageRef.current, {
       y: 15,
       rotation: -1,
