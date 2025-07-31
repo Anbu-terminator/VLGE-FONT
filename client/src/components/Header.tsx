@@ -31,7 +31,7 @@ export function Header() {
     <header
       className={`fixed w-full top-0 z-40 transition-all duration-300 ${
         isScrolled ? "bg-white/95 backdrop-blur-sm shadow-lg" : "bg-white"
-      } overflow-x-auto`}
+      }`}
       data-testid="header"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,7 +39,7 @@ export function Header() {
 
           {/* Logo + Company Name */}
           <motion.div
-            className="flex items-center min-w-0"
+            className="flex items-center flex-nowrap min-w-0"
             data-testid="logo-container"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -54,7 +54,7 @@ export function Header() {
               />
             </Link>
             <motion.h2
-              className="ml-3 text-lg md:text-2xl font-bold leading-tight text-red-500 truncate max-w-[160px] md:max-w-none"
+              className="ml-3 text-sm sm:text-base md:text-xl font-bold leading-tight text-red-500 whitespace-nowrap truncate max-w-[120px] sm:max-w-[200px] md:max-w-none"
               data-testid="company-name"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -65,41 +65,24 @@ export function Header() {
           </motion.div>
 
           {/* Navigation (Desktop) */}
-          <motion.div
-            className="hidden md:flex flex-wrap items-center gap-x-6 gap-y-2 max-w-full overflow-hidden"
-            data-testid="desktop-nav"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              visible: { transition: { staggerChildren: 0.1 } },
-            }}
-          >
+          <div className="hidden md:flex items-center space-x-6" data-testid="desktop-nav">
             {navLinks.map((link) => (
-              <motion.div
+              <Link
                 key={link.href}
-                variants={{
-                  hidden: { opacity: 0, y: -10 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                href={link.href}
+                className="relative text-vlge-secondary hover:text-vlge-primary font-semibold transition-colors group"
+                data-testid={`nav-link-${link.label.toLowerCase().replace(/ /g, "-")}`}
               >
-                <Link
-                  href={link.href}
-                  className="relative text-vlge-secondary hover:text-vlge-primary font-semibold transition-colors group whitespace-nowrap text-sm md:text-base"
-                  data-testid={`nav-link-${link.label.toLowerCase().replace(" ", "-")}`}
-                >
-                  {link.label}
-                  <span className="block h-[2px] max-w-0 group-hover:max-w-full transition-all duration-300 bg-red-500"></span>
-                </Link>
-              </motion.div>
+                {link.label}
+                <span className="block h-[2px] max-w-0 group-hover:max-w-full transition-all duration-300 bg-red-500"></span>
+              </Link>
             ))}
-          </motion.div>
+          </div>
 
           {/* Mobile Menu */}
           <div className="md:hidden">
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-              <SheetTrigger asChild onClick={() => setIsMenuOpen(true)}>
+              <SheetTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
@@ -113,36 +96,20 @@ export function Header() {
                 side="right"
                 className="w-[300px] bg-white/95 backdrop-blur-lg transition-all duration-300"
                 data-testid="mobile-menu"
-                onInteractOutside={() => setIsMenuOpen(false)}
               >
-                <motion.nav
-                  className="flex flex-col space-y-4 mt-8"
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    visible: { transition: { staggerChildren: 0.05 } },
-                  }}
-                >
+                <nav className="flex flex-col space-y-4 mt-8">
                   {navLinks.map((link) => (
-                    <motion.div
+                    <Link
                       key={link.href}
-                      variants={{
-                        hidden: { opacity: 0, x: 20 },
-                        visible: { opacity: 1, x: 0 },
-                      }}
-                      whileHover={{ x: 10 }}
+                      href={link.href}
+                      className="text-vlge-secondary hover:text-vlge-primary transition-all duration-200 font-semibold text-lg px-4 py-2"
+                      onClick={() => setIsMenuOpen(false)}
+                      data-testid={`mobile-nav-link-${link.label.toLowerCase().replace(/ /g, "-")}`}
                     >
-                      <Link
-                        href={link.href}
-                        className="text-vlge-secondary hover:text-vlge-primary transition-all duration-200 font-semibold text-lg px-4 py-2"
-                        onClick={() => setIsMenuOpen(false)}
-                        data-testid={`mobile-nav-link-${link.label.toLowerCase().replace(" ", "-")}`}
-                      >
-                        {link.label}
-                      </Link>
-                    </motion.div>
+                      {link.label}
+                    </Link>
                   ))}
-                </motion.nav>
+                </nav>
               </SheetContent>
             </Sheet>
           </div>
